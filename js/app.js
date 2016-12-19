@@ -62,15 +62,25 @@ Player.prototype.handleInput = function(e) {
     }
     this.update(dx, dy);
 };
+
 var stone1 = 60;
 var stone2 = 145;
 var stone3 = 230;
+var stones = [stone1, stone2, stone3];
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [new Enemy(0,stone1,1), new Enemy(0,stone1,2), new Enemy(0,stone2,3), new Enemy(0,stone3,4)];
-var player = new Player(0,300);
+var allEnemies = [];
+var createEnemey = function () {
+    var stone = stones[Math.floor(Math.random() * stones.length)];
+    var speed = Math.floor(Math.random() * 6);
+    allEnemies.push(new Enemy(-101, stone, speed));
+};
 
+window.setInterval(function(){
+  createEnemey();
+}, 700);
+var player = new Player(0,300);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
