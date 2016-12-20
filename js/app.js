@@ -16,6 +16,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.collision();
     this.x = this.x + this.speed*100*dt;
 };
 
@@ -24,6 +25,13 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+Enemy.prototype.collision = function() {
+    if(this.y == player.y){
+        if((this.x <= player.x) && ((this.x + 83) >= player.x)){
+            player.reset();
+        }
+    }
+};
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -43,10 +51,17 @@ Player.prototype.update = function(dx, dy) {
     if(newY < -40 || newY > 383) dy = 0;
     this.x = this.x + dx;
     this.y = this.y + dy;
+    if(this.y == -32){
+        this.reset();
+    }
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+Player.prototype.reset = function() {
+    this.x = 0;
+    this.y = 300;
 };
 Player.prototype.handleInput = function(e) {
     var dx = 0;
@@ -63,9 +78,9 @@ Player.prototype.handleInput = function(e) {
     this.update(dx, dy);
 };
 
-var stone1 = 60;
-var stone2 = 145;
-var stone3 = 230;
+var stone1 = 51;
+var stone2 = 134;
+var stone3 = 217;
 var stones = [stone1, stone2, stone3];
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
